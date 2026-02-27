@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Counter App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f6f8;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .counter-box {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .count {
+            font-size: 50px;
+            margin: 20px 0;
+            color: #007bff;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .present {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .absent {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .reset {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Attendance Counter System</h1>
+
+    <div class="counter-box">
+        <h2>Total Present</h2>
+        <div class="count" id="presentCount">0</div>
+
+        <button class="present" onclick="markPresent()">Mark Present</button>
+        <button class="absent" onclick="markAbsent()">Mark Absent</button>
+        <button class="reset" onclick="resetCount()">Reset</button>
+
+        <hr>
+
+        <h3>Total Absent</h3>
+        <div class="count" id="absentCount">0</div>
+    </div>
+
+<script>
+    let present = 0;
+    let absent = 0;
+
+    function markPresent() {
+        present++;
+        document.getElementById("presentCount").innerText = present;
+    }
+
+    function markAbsent() {
+        absent++;
+        document.getElementById("absentCount").innerText = absent;
+    }
+
+    function resetCount() {
+        present = 0;
+        absent = 0;
+        document.getElementById("presentCount").innerText = present;
+        document.getElementById("absentCount").innerText = absent;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: attendance-pod
+  labels:
+    app: attendance-app
+spec:
+  containers :
+    - name : attendance-container
+      image : nginx:alpine
+      ports :
+        - containerPort : 80
