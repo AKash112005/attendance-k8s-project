@@ -1,97 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Attendance Counter App</title>
+    <meta charset="UTF-8">
+    <title>Attendance System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: #f4f6f8;
             text-align: center;
-            background-color: #f4f6f8;
-            margin-top: 50px;
+            padding: 40px;
         }
 
-        h1 {
-            color: #333;
-        }
-
-        .counter-box {
+        .container {
             background: white;
-            padding: 30px;
-            width: 350px;
+            width: 500px;
             margin: auto;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .count {
-            font-size: 50px;
-            margin: 20px 0;
-            color: #007bff;
+        input {
+            padding: 8px;
+            width: 60%;
+            margin-bottom: 10px;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 8px 12px;
             margin: 5px;
-            font-size: 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .present {
-            background-color: #28a745;
-            color: white;
+        .present { background: green; color: white; }
+        .absent { background: red; color: white; }
+        .reset { background: gray; color: white; }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
         }
 
-        .absent {
-            background-color: #dc3545;
-            color: white;
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
         }
 
-        .reset {
-            background-color: #6c757d;
-            color: white;
+        .summary {
+            margin-top: 15px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>Attendance Counter System</h1>
+<div class="container">
+    <h2>📋 Attendance Marking System</h2>
 
-    <div class="counter-box">
-        <h2>Total Present</h2>
-        <div class="count" id="presentCount">0</div>
+    <input type="text" id="studentName" placeholder="Enter Student Name">
 
-        <button class="present" onclick="markPresent()">Mark Present</button>
-        <button class="absent" onclick="markAbsent()">Mark Absent</button>
-        <button class="reset" onclick="resetCount()">Reset</button>
+    <br>
+    <button class="present" onclick="markAttendance('Present')">Present</button>
+    <button class="absent" onclick="markAttendance('Absent')">Absent</button>
+    <button class="reset" onclick="resetAttendance()">Reset</button>
 
-        <hr>
+    <table id="attendanceTable">
+        <tr>
+            <th>Student Name</th>
+            <th>Status</th>
+        </tr>
+    </table>
 
-        <h3>Total Absent</h3>
-        <div class="count" id="absentCount">0</div>
+    <div class="summary">
+        Present: <span id="presentCount">0</span> |
+        Absent: <span id="absentCount">0</span> |
+        Percentage: <span id="percentage">0%</span>
     </div>
+</div>
 
 <script>
-    let present = 0;
-    let absent = 0;
+let present = 0;
+let absent = 0;
 
-    function markPresent() {
-        present++;
-        document.getElementById("presentCount").innerText = present;
+function markAttendance(status) {
+    let name = document.getElementById("studentName").value;
+
+    if (name === "") {
+        alert("Please enter student name!");
+        return;
     }
 
-    function markAbsent() {
-        absent++;
-        document.getElementById("absentCount").innerText = absent;
-    }
+    let table = document.getElementById("attendanceTable");
+    let row = table.insertRow();
+    row.insertCell(0).innerText = name;
+    row.insertCell(1).innerText = status;
 
-    function resetCount() {
-        present = 0;
-        absent = 0;
-        document.getElementById("presentCount").innerText = present;
-        document.getElementById("absentCount").innerText = absent;
-    }
+    if (status === "Present") present++;
+    else absent++;
+
+    updateSummary();
+    document.getElementById("studentName").value = "";
+}
+
+function updateSummary() {
+    document.getElementById("presentCount").innerText = present;
+    document.getElementById("absentCount").innerText = absent;
+
+    let total = present + absent;
+    let percent = total === 0 ? 0 : ((present / total) * 100).toFixed(1);
+    document.getElementById("percentage").innerText = percent + "%";
+}
+
+function resetAttendance() {
+    document.getElementById("attendanceTable").innerHTML =
+        "<tr><th>Student Name</th><th>Status</th></tr>";
+    present = 0;
+    absent = 0;
+    updateSummary();
+}
 </script>
 
 </body>
